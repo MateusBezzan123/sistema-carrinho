@@ -1,6 +1,15 @@
-<div *ngFor="let product of products">
-    <h2>{{ product.name }}</h2>
-    <p>{{ product.description }}</p>
-    <p>{{ product.price | currency }}</p>
-    <a [routerLink]="['/product', product.id]">Ver detalhes</a>
+<h2 class="text-center">Lista de Produtos</h2>
+<div class="row">
+  <div *ngFor="let product of products" class="col-md-4 mb-4">
+    <div class="card shadow-sm">
+      <img [src]="product.image" class="card-img-top" *ngIf="product.image" alt="{{ product.name }}">
+      <div class="card-body">
+        <h5 class="card-title">{{ product.name }}</h5>
+        <p class="card-text">{{ product.description }}</p>
+        <p class="font-weight-bold">{{ product.price | currency }}</p>
+        <a [routerLink]="['/product', product.id]" class="btn btn-primary btn-block">Ver detalhes</a>
+        <button class="btn btn-success btn-block mt-2" (click)="addToCart(product)">Adicionar ao carrinho</button>
+      </div>
+    </div>
+  </div>
 </div>

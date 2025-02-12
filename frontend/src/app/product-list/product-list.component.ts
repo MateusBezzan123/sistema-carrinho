@@ -23,5 +23,17 @@ export class ProductListComponent implements OnInit {
       console.error('Erro ao buscar produtos:', error);
     });
   }
+
+  addToCart(product: any): void {
+    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    cart.push({ ...product, quantity: 1 });
+    localStorage.setItem('cart', JSON.stringify(cart));
+    alert('Produto adicionado ao carrinho!');
+    
+    // Atualizar navbar
+    const event = new CustomEvent('cartUpdated');
+    window.dispatchEvent(event);
+  }
+  
   
 }

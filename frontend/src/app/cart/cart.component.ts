@@ -30,13 +30,18 @@ export class CartComponent implements OnInit {
     this.cartItems.splice(index, 1);
     localStorage.setItem('cart', JSON.stringify(this.cartItems));
     this.calculateTotal();
+    
+    // Atualizar navbar
+    const event = new CustomEvent('cartUpdated');
+    window.dispatchEvent(event);
   }
-
+  
   updateQuantity(item: any, quantity: number): void {
     item.quantity = quantity;
     localStorage.setItem('cart', JSON.stringify(this.cartItems));
     this.calculateTotal();
   }
+  
   
   addToCart(product: any): void {
     let cart = JSON.parse(localStorage.getItem('cart') || '[]');

@@ -8,12 +8,14 @@ import { CartComponent } from '../src/app/cart/cart.component';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { NavbarComponent } from './app/navbar/navbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ProductListComponent,
     ProductDetailComponent,
+    NavbarComponent,
     CartComponent
   ],
   imports: [

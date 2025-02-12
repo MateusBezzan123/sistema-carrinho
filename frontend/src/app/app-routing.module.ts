@@ -4,10 +4,10 @@ import { ProductListComponent } from './product-list/product-list.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { CartComponent } from './cart/cart.component';
 
-export const routes: Routes = [ // ✅ Agora 'routes' pode ser importado no main.ts
+export const routes: Routes = [
   { path: '', component: ProductListComponent },
   { path: 'product/:id', component: ProductDetailComponent },
-  { path: 'cart', component: CartComponent },
+  { path: 'cart', component: CartComponent }
 ];
 
 @NgModule({
