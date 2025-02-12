@@ -1,4 +1,4 @@
-import { IsString, IsNumber, IsOptional, IsPositive } from 'class-validator';
+import { IsString, IsNumber, IsOptional, IsPositive, IsUrl } from 'class-validator';
 import { Transform } from 'class-transformer';
 
 export class CreateProductDto {
@@ -15,5 +15,6 @@ export class CreateProductDto {
 
   @IsString()
   @IsOptional()
+  @IsUrl({}, { message: 'A URL da imagem deve ser válida' })
   image?: string;
 }
