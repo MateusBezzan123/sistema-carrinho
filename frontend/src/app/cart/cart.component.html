@@ -2,7 +2,6 @@
 
 <div class="container">
     <div class="row">
-        <!-- Seção dos Itens do Carrinho -->
         <div class="col-md-8">
             <div *ngIf="cartItems.length === 0" class="alert alert-info text-center">
                 Seu carrinho está vazio.
@@ -15,14 +14,13 @@
                         <p class="card-text text-muted">{{ item.price | currency }}</p>
                         <label for="quantity-{{i}}" class="fw-bold">Quantidade:</label>
                         <input type="number" class="form-control w-25 d-inline" id="quantity-{{i}}"
-                            [(ngModel)]="item.quantity" (change)="updateQuantity(item, item.quantity)" min="1">
+                            [value]="item.quantity" (change)="updateQuantity(item, $event)" min="1">
                     </div>
                     <button class="btn btn-danger" (click)="removeItem(i)">Remover</button>
                 </div>
             </div>
         </div>
 
-        <!-- Seção do Total e Finalizar Compra -->
         <div class="col-md-4">
             <div class="card shadow-lg">
                 <div class="card-body text-center">
