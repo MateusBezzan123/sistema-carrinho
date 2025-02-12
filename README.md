@@ -50,7 +50,7 @@ Este projeto é um sistema de carrinho de compras desenvolvido com **NestJS** no
 ### Passo 1: Clonar o Repositório
 
 ```bash
-git clone [https://github.com/seu-usuario/carrinho-compras.git](https://github.com/MateusBezzan123/sistema-carrinho.git)
+git clone (https://github.com/MateusBezzan123/sistema-carrinho.git)
 cd carrinho-compras
 ```
 
