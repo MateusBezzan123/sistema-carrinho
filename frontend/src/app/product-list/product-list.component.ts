@@ -14,8 +14,13 @@ import { FormsModule } from '@angular/forms';
 export class ProductListComponent implements OnInit {
   products: any[] = [];
   filteredProducts: any[] = [];
+  displayedProducts: any[] = [];
   searchTerm: string = '';
   openedProductId: number | null = null;
+
+  currentPage: number = 1;
+  itemsPerPage: number = 6; 
+  totalPages: number = 1;
 
   constructor(private productService: ProductService, private router: Router) {}
 
@@ -24,6 +29,7 @@ export class ProductListComponent implements OnInit {
       console.log('Produtos recebidos:', data);
       this.products = data;
       this.filteredProducts = data;
+      this.updatePagination();
     }, error => {
       console.error('Erro ao buscar produtos:', error);
     });
@@ -32,14 +38,30 @@ export class ProductListComponent implements OnInit {
   filterProducts(): void {
     if (!this.searchTerm.trim()) {
       this.filteredProducts = [...this.products];
-      return;
+    } else {
+      const term = this.searchTerm.toLowerCase();
+      this.filteredProducts = this.products.filter(product =>
+        product.name.toLowerCase().includes(term) ||
+        product.description.toLowerCase().includes(term)
+      );
     }
+    this.currentPage = 1;
+    this.updatePagination();
+  }
 
-    const term = this.searchTerm.toLowerCase();
-    this.filteredProducts = this.products.filter(product =>
-      product.name.toLowerCase().includes(term) ||
-      product.description.toLowerCase().includes(term)
+  updatePagination(): void {
+    this.totalPages = Math.ceil(this.filteredProducts.length / this.itemsPerPage);
+    this.displayedProducts = this.filteredProducts.slice(
+      (this.currentPage - 1) * this.itemsPerPage,
+      this.currentPage * this.itemsPerPage
     );
+  }
+
+  changePage(page: number): void {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+      this.updatePagination();
+    }
   }
 
   addToCart(product: any): void {
@@ -53,6 +75,6 @@ export class ProductListComponent implements OnInit {
   }
 
   goToProductDetails(id: number): void {
-    this.router.navigate(['/product', id]); // Redireciona para a página de detalhes do produto
+    this.router.navigate(['/product', id]); 
   }
 }
