@@ -1,0 +1,13 @@
+img {
+    max-height: 400px;
+    object-fit: contain;
+}
+
+.btn-success {
+    transition: 0.3s ease-in-out;
+}
+
+.btn-success:hover {
+    background-color: #28a745;
+    opacity: 0.9;
+}

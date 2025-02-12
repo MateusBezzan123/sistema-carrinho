@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../product.service';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms'; 
+import { RouterModule, Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-product-list',
@@ -17,7 +17,7 @@ export class ProductListComponent implements OnInit {
   searchTerm: string = '';
   openedProductId: number | null = null;
 
-  constructor(private productService: ProductService) {}
+  constructor(private productService: ProductService, private router: Router) {}
 
   ngOnInit(): void {
     this.productService.getProducts().subscribe(data => {
@@ -40,8 +40,6 @@ export class ProductListComponent implements OnInit {
       product.name.toLowerCase().includes(term) ||
       product.description.toLowerCase().includes(term)
     );
-
-    console.log("Produtos filtrados:", this.filteredProducts);
   }
 
   addToCart(product: any): void {
@@ -54,7 +52,7 @@ export class ProductListComponent implements OnInit {
     window.dispatchEvent(event);
   }
 
-  toggleProductDetails(id: number): void {
-    this.openedProductId = this.openedProductId === id ? null : id;
+  goToProductDetails(id: number): void {
+    this.router.navigate(['/product', id]); // Redireciona para a página de detalhes do produto
   }
 }

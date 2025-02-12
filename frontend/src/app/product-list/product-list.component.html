@@ -1,9 +1,12 @@
 <div class="container my-5">
     <h2 class="text-center mb-4 fw-bold">Lista de Produtos</h2>
+
+    <!-- Campo de busca -->
     <div class="mb-4">
         <input type="text" class="form-control" placeholder="Buscar por nome ou descrição..." 
                [(ngModel)]="searchTerm" (input)="filterProducts()">
     </div>
+
     <div class="row g-4">
         <div *ngFor="let product of filteredProducts" class="col-md-4 d-flex">
             <div class="card h-100 shadow-sm border-0 w-100">
@@ -13,17 +16,12 @@
                     <p class="card-text text-muted">{{ product.description }}</p>
                     <p class="fw-bold fs-5">{{ product.price | currency }}</p>
                     <div class="mt-auto">
-                        <button class="btn btn-primary w-100" (click)="toggleProductDetails(product.id)">
-                            {{ openedProductId === product.id ? 'Fechar detalhes' : 'Ver detalhes' }}
+                        <button class="btn btn-primary w-100" (click)="goToProductDetails(product.id)">
+                            Ver detalhes
                         </button>
-                        <button class="btn btn-success w-100 mt-2" (click)="addToCart(product)">Adicionar ao
-                            carrinho</button>
-                    </div>
-                    <div *ngIf="openedProductId === product.id" class="mt-3 p-3 border rounded bg-light">
-                        <h4 class="fw-bold">{{ product.name }}</h4>
-                        <p>{{ product.description }}</p>
-                        <p class="fw-bold fs-4">{{ product.price | currency }}</p>
-                        <button class="btn btn-danger w-100" (click)="toggleProductDetails(product.id)">Fechar</button>
+                        <button class="btn btn-success w-100 mt-2" (click)="addToCart(product)">
+                            Adicionar ao carrinho
+                        </button>
                     </div>
                 </div>
             </div>
