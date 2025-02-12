@@ -2,7 +2,11 @@
 
 <div class="container my-5">
     <h2 class="text-center mb-4 fw-bold">Lista de Produtos</h2>
-
+    <div class="d-flex justify-content-between mb-3">
+        <h2 class="fw-bold">Lista de Produtos</h2>
+        <a routerLink="/create-product" class="btn btn-success">➕ Cadastrar Produto</a>
+      </div>
+      
     <div *ngIf="isLoading" class="text-center">
         <p>🔄 Carregando produtos...</p>
     </div>

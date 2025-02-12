@@ -19,7 +19,7 @@ export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
   @Post()
-  @UsePipes(new ValidationPipe({ whitelist: true, transform: true })) // Habilita validação automática
+  @UsePipes(new ValidationPipe({ whitelist: true, transform: true })) 
   async create(@Body() createProductDto: CreateProductDto) {
     return this.productsService.create(createProductDto);
   }
