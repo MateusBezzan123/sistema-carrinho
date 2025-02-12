@@ -50,5 +50,55 @@ Este projeto é um sistema de carrinho de compras desenvolvido com **NestJS** no
 ### Passo 1: Clonar o Repositório
 
 ```bash
-git clone https://github.com/seu-usuario/carrinho-compras.git
+git clone [https://github.com/seu-usuario/carrinho-compras.git](https://github.com/MateusBezzan123/sistema-carrinho.git)
 cd carrinho-compras
+```
+
+### Passo 2: Configurar o Backend
+
+- Navegue até a pasta do backend:
+  
+```bash
+cd backend
+```
+- Instale as dependências:
+
+```bash
+npm install
+```
+- Configure o arquivo `.env`  com as credenciais do banco de dados:
+  
+```bash
+DATABASE_URL="postgresql://user:password@localhost:5432/mydb?schema=public"
+```
+- Execute as migrações do Prisma:
+  
+```bash
+npx prisma migrate dev --name init
+```
+- Inicie o servidor backend:
+
+```bash
+npm run start
+```
+
+Passo 3: Configurar o Frontend
+
+- Navegue até a pasta do frontend:
+  
+```bash
+cd ../frontend
+```
+- Instale as dependências:
+
+```bash
+npm install
+```
+
+- Inicie o servidor frontend:
+  
+```bash
+npm run start
+```
+
+
