@@ -3,11 +3,13 @@ import { ProductService } from '../product.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { AlertService } from '../alert.service';
+import { AlertComponent } from '../alert/alert.component';
 
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule, AlertComponent], 
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.css']
 })
@@ -16,22 +18,24 @@ export class ProductListComponent implements OnInit {
   filteredProducts: any[] = [];
   displayedProducts: any[] = [];
   searchTerm: string = '';
-  openedProductId: number | null = null;
+  isLoading: boolean = true;
+  errorMessage: string = '';
 
   currentPage: number = 1;
   itemsPerPage: number = 6; 
   totalPages: number = 1;
 
-  constructor(private productService: ProductService, private router: Router) {}
+  constructor(private productService: ProductService, private router: Router, private alertService: AlertService) {}
 
   ngOnInit(): void {
     this.productService.getProducts().subscribe(data => {
-      console.log('Produtos recebidos:', data);
+      this.isLoading = false;
       this.products = data;
       this.filteredProducts = data;
       this.updatePagination();
     }, error => {
-      console.error('Erro ao buscar produtos:', error);
+      this.isLoading = false;
+      this.alertService.addAlert('danger', 'Erro ao buscar produtos. Tente novamente mais tarde.');
     });
   }
 
@@ -65,13 +69,16 @@ export class ProductListComponent implements OnInit {
   }
 
   addToCart(product: any): void {
-    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
-    cart.push({ ...product, quantity: 1 });
-    localStorage.setItem('cart', JSON.stringify(cart));
-    alert('Produto adicionado ao carrinho!');
-    
-    const event = new CustomEvent('cartUpdated');
-    window.dispatchEvent(event);
+    try {
+      let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      cart.push({ ...product, quantity: 1 });
+      localStorage.setItem('cart', JSON.stringify(cart));
+      this.alertService.addAlert('success', '✅ Produto adicionado ao carrinho!');
+      const event = new CustomEvent('cartUpdated');
+      window.dispatchEvent(event);
+    } catch (error) {
+      this.alertService.addAlert('danger', '❌ Erro ao adicionar produto ao carrinho.');
+    }
   }
 
   goToProductDetails(id: number): void {

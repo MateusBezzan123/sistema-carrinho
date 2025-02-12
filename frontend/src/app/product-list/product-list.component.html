@@ -1,12 +1,18 @@
+<app-alert></app-alert> 
+
 <div class="container my-5">
     <h2 class="text-center mb-4 fw-bold">Lista de Produtos</h2>
+
+    <div *ngIf="isLoading" class="text-center">
+        <p>🔄 Carregando produtos...</p>
+    </div>
 
     <div class="mb-4">
         <input type="text" class="form-control" placeholder="Buscar por nome ou descrição..." 
                [(ngModel)]="searchTerm" (input)="filterProducts()">
     </div>
 
-    <div class="row g-4">
+    <div class="row g-4" *ngIf="!isLoading">
         <div *ngFor="let product of displayedProducts" class="col-md-4 d-flex">
             <div class="card h-100 shadow-sm border-0 w-100">
                 <img [src]="product.image" class="card-img-top" *ngIf="product.image" alt="{{ product.name }}">
@@ -26,21 +32,4 @@
             </div>
         </div>
     </div>
-
-    <nav class="mt-4">
-        <ul class="pagination justify-content-center">
-            <li class="page-item" [class.disabled]="currentPage === 1">
-                <button class="page-link" (click)="changePage(currentPage - 1)">Anterior</button>
-            </li>
-
-            <li class="page-item" *ngFor="let page of [].constructor(totalPages); let i = index"
-                [class.active]="currentPage === (i + 1)">
-                <button class="page-link" (click)="changePage(i + 1)">{{ i + 1 }}</button>
-            </li>
-
-            <li class="page-item" [class.disabled]="currentPage === totalPages">
-                <button class="page-link" (click)="changePage(currentPage + 1)">Próximo</button>
-            </li>
-        </ul>
-    </nav>
 </div>

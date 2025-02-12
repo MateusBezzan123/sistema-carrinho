@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../product.service';
 import { CommonModule } from '@angular/common';
+import { AlertService } from '../alert.service';
+import { AlertComponent } from '../alert/alert.component';
 
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, AlertComponent],
   templateUrl: './product-detail.component.html',
   styleUrls: ['./product-detail.component.css']
 })
@@ -17,6 +19,7 @@ export class ProductDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
+    private alertService: AlertService,
     private router: Router
   ) { }
 
@@ -26,12 +29,16 @@ export class ProductDetailComponent implements OnInit {
       const id = +idParam;
       this.productService.getProduct(id).subscribe(data => {
         this.product = data;
+      }, error => {
+        this.alertService.addAlert('danger', '❌ Erro ao carregar detalhes do produto.');
+        this.router.navigate(['/']);
       });
     } else {
-      console.error('ID do produto não encontrado na URL.');
-      this.router.navigate(['/products']);
+      this.alertService.addAlert('danger', '❌ Produto não encontrado.');
+      this.router.navigate(['/']);
     }
   }
+  
 
   addToCart(product: any): void {
     let cart = JSON.parse(localStorage.getItem('cart') || '[]');
