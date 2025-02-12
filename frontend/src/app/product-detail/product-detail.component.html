@@ -1,0 +1,5 @@
+<h2>{{ product.name }}</h2>
+<p>{{ product.description }}</p>
+<p>{{ product.price | currency }}</p>
+<img [src]="product.image" *ngIf="product.image">
+<button (click)="addToCart(product)">Adicionar ao carrinho</button>
