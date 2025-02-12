@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './product-detail.component.html',
   styleUrls: ['./product-detail.component.css']
 })
+
 export class ProductDetailComponent implements OnInit {
   product: any;
 

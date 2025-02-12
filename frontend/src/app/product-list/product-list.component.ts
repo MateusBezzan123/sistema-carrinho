@@ -12,6 +12,7 @@ import { RouterModule } from '@angular/router';
 })
 export class ProductListComponent implements OnInit {
   products: any[] = [];
+  openedProductId: number | null = null;
 
   constructor(private productService: ProductService) { }
 
@@ -29,11 +30,12 @@ export class ProductListComponent implements OnInit {
     cart.push({ ...product, quantity: 1 });
     localStorage.setItem('cart', JSON.stringify(cart));
     alert('Produto adicionado ao carrinho!');
-    
-    // Atualizar navbar
+
     const event = new CustomEvent('cartUpdated');
     window.dispatchEvent(event);
   }
   
-  
+  toggleProductDetails(id: number): void {
+    this.openedProductId = this.openedProductId === id ? null : id;
+  }
 }

@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
   imports: [CommonModule, FormsModule],
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css'],
-  providers: [CurrencyPipe] // Adiciona suporte ao pipe de moeda
+  providers: [CurrencyPipe]
 })
 export class CartComponent implements OnInit {
   cartItems: any[] = [];
@@ -30,8 +30,6 @@ export class CartComponent implements OnInit {
     this.cartItems.splice(index, 1);
     localStorage.setItem('cart', JSON.stringify(this.cartItems));
     this.calculateTotal();
-    
-    // Atualizar navbar
     const event = new CustomEvent('cartUpdated');
     window.dispatchEvent(event);
   }
@@ -40,13 +38,5 @@ export class CartComponent implements OnInit {
     item.quantity = quantity;
     localStorage.setItem('cart', JSON.stringify(this.cartItems));
     this.calculateTotal();
-  }
-  
-  
-  addToCart(product: any): void {
-    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
-    cart.push({ ...product, quantity: 1 });
-    localStorage.setItem('cart', JSON.stringify(cart));
-    alert('Produto adicionado ao carrinho!');
   }
 }
