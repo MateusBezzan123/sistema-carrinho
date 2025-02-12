@@ -1,4 +1,16 @@
-import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Put,
+  Delete,
+  ParseIntPipe,
+  UsePipes,
+  ValidationPipe,
+  NotFoundException
+} from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from '../products/dto/create-product.dto/create-product.dto';
 
@@ -7,6 +19,7 @@ export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
   @Post()
+  @UsePipes(new ValidationPipe({ whitelist: true, transform: true })) // Habilita validação automática
   async create(@Body() createProductDto: CreateProductDto) {
     return this.productsService.create(createProductDto);
   }
@@ -17,17 +30,20 @@ export class ProductsController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string) {
-    return this.productsService.findOne(+id);
+  async findOne(@Param('id', ParseIntPipe) id: number) {
+    const product = await this.productsService.findOne(id);
+    if (!product) throw new NotFoundException('Produto não encontrado');
+    return product;
   }
 
   @Put(':id')
-  async update(@Param('id') id: string, @Body() updateProductDto: CreateProductDto) {
-    return this.productsService.update(+id, updateProductDto);
+  @UsePipes(new ValidationPipe({ whitelist: true, transform: true }))
+  async update(@Param('id', ParseIntPipe) id: number, @Body() updateProductDto: CreateProductDto) {
+    return this.productsService.update(id, updateProductDto);
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string) {
-    return this.productsService.remove(+id);
+  async remove(@Param('id', ParseIntPipe) id: number) {
+    return this.productsService.remove(id);
   }
 }
